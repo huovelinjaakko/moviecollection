@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Edit</title>
+</head>
+<body>
+	<h1>Edit movie</h1>
+	<div>
+		<form th:object="${editMovie}" th:action="@{/saveMovie}" action="#" method="post">
+			<input type="hidden" id="id" th:field="*{id}" />
+			<div>
+				<label>Title</label>
+				<input type="text" th:field="*{title}" />
+			</div>
+			<div>
+				<label>Director</label>
+				<input type="text" th:field="*{director}" />
+			</div>
+			<div>
+				<label>Description</label>
+				<input type="text" th:field="*{description}" />
+			</div>
+			<div>
+				<label>Release year</label>
+				<input type="text" th:field="*{releaseYear}" />
+			</div>
+			<div>
+				<label>Genre</label>
+				<select th:field="*{genre}" class="form-control">
+					<option th:each="genre: ${genres}" th:value="${genre.genreid}" th:text="${genre.name}"></option>
+				</select>
+			</div>
+			<br>
+			
+			<input type="submit" value="Save"></input>
+		</form>
+	</div>
+</body>
+</html>
