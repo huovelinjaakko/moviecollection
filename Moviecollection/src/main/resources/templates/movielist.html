@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://thymeleaf.org">
+<html xmlns:th="http://thymeleaf.org"
+xmlns:sec="http://thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
@@ -22,11 +23,12 @@
 				<td th:text="${movie.description}"></td>
 				<td th:text="${movie.releaseYear}"></td>
 				<td th:text="${movie.genre.name}"></td>
-				<td><a th:href="@{/delete/{id}(id=${movie.id})}" class="btn btn-danger">Delete</a></td>
-				<td><a th:href="@{/edit/{id}(id=${movie.id})}">Edit</a></td>
+				<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/delete/{id}(id=${movie.id})}" class="btn btn-danger">Delete</a></td>
+				<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/edit/{id}(id=${movie.id})}">Edit</a></td>
 			</tr>
 		</tbody>
 	</table>
-	<a href="/add" class="btn btn-success">Add movie</a>
+	<a sec:authorize="hasAuthority('ADMIN')" href="/add" class="btn btn-success">Add movie</a>
+	<a href="/logout" class="btn btn-success">Log out</a>
 </body>
 </html>

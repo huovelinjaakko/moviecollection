@@ -1,6 +1,7 @@
 package Moviecollection.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +29,7 @@ public class MovieController {
 		return "movielist";
 	}
 	
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "/add")
 	public String addMovie(Model model) {
 		model.addAttribute("newMovie", new Movie());
@@ -41,12 +43,14 @@ public class MovieController {
 		return "redirect:movielist";
 	}
 	
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value="/delete/{id}", method = RequestMethod.GET)
 	public String deleteMovie(@PathVariable("id") Long id, Model model) {
 		repository.deleteById(id);
 		return "redirect:../movielist";
 	}
 	
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@GetMapping("edit/{id}")
 	public String editMovie(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("editMovie", repository.findById(id));
